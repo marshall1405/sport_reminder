@@ -6,3 +6,6 @@ A simple python program that will notify me through my email about matches I tha
 
 ## How?
 It is important to me that the program is as independant as it could. This means I want to avoid some APIs that would probably make my life a little easier but make me dependant on a service that, in the future, might be behind a pay wall. Instead, I feel that a much safer and future proof solution is parsing whole HTML files from sites that have been for years providing this information for free.
+
+## Needed Libraries
+- requests
