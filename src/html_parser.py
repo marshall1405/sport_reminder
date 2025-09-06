@@ -9,4 +9,4 @@ def parse_whole_page(text):
     
 
 def find_match_indices(text):
-    return [m.start() for m in re.finditer(r'<a href="https', text)]
+    return [m.start() for m in re.finditer(r'<a href="https://www.livesport.cz/zapas', text)]

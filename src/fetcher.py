@@ -1,8 +1,14 @@
-import requests
+from playwright.sync_api import sync_playwright
 
 def fetch_html_text(url):
-    html = requests.get(url)
-    if html.status_code == 200:
-        return html.text[:]
-    else:
-        return "Something Went Wrong: " + html.status_code
+    with sync_playwright() as play:
+        browser = play.chromium.launch(headless=True)
+        page = browser.new_page()
+
+        page.goto(url, wait_until="networkidle")
+
+        html = page.content()
+
+        browser.close()
+    return html
+
