@@ -1,6 +1,6 @@
 import requests
 
-def fetch(url):
+def fetch_html_text(url):
     html = requests.get(url)
     if html.status_code == 200:
         return html.text[:]
