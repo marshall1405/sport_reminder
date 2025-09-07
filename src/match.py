@@ -21,4 +21,4 @@ class Match:
         self.time = time
 
     def print(self):
-        print("Match ", self.id, ", Start:", self.start_index, ", End: ", self.end_index)
+        print("Match ", self.id, ", Start:", self.start_index, ", End: ", self.end_index, ", League: ", self.league.print(), ", Team1: ", self.team1, ", Team2:", self.team2, ", Time, ", self.time)

@@ -28,9 +28,12 @@ def create_matches_leagues(text):
         return matches, leagues
 
     
-def parse_matches(matches, text):
+def parse_matches(matches, leagues, text):
     for m in matches:
         relevant_text = text[m.start_index: m.end_index]
+        parse_teams(m, relevant_text)
+        parse_league(m, leagues)
+        parse_time(m, relevant_text)
 
 def parse_leagues(leagues, text):
     for l in leagues:
@@ -41,13 +44,28 @@ def parse_leagues(leagues, text):
 
 # MATCH
 def parse_teams(match, relevant_text):
-    return
+    team1 = re.search(r'event__participant--home">([^<]+)<', relevant_text)
+    team2 = re.search(r'event__participant--away">([^<]+)<', relevant_text)
+    if not team1 or not team2:
+        match.set_teams("NO TEAM", "NO TEAM")
+    else:
+        match.set_teams(team1.group(1), team2.group(1))
 
-def parse_league(match, relevant_text):
-    return
+def parse_league(match, leagues):
+    match_start = match.start_index
+    for l in range(len(leagues)):
+        if l < len(leagues)-1:
+            if match_start > leagues[l].start_index and match_start < leagues[l+1].start_index:
+                match.set_league(leagues[l])
+        else:
+            match.set_league(leagues[l])
 
 def parse_time(match, relevant_text):
-    return
+    time = re.search(r'"event__time">([^<]+)<', relevant_text)
+    if time:
+        match.set_time(time.group(1))
+    else:
+        match.set_time("No Time")
 
 
 # LEAGUE
@@ -58,6 +76,8 @@ def parse_single(league, relevant_text):
     single = re.search(r'>([^<]+)<', relevant_text)
     league.set_single("DVOUHRY" in single.group(1))
 
+
+#HELPERS
 def find_match_indices(text):
     return [m.start() for m in re.finditer(r'<a href="https://www.livesport.cz/zapas', text)]
 
