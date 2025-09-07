@@ -1,5 +1,5 @@
 class League:
-    def __init__(self, id, start_index, end_index, name, single):
+    def __init__(self, id, start_index, end_index):
         self.id = id
         self.start_index = start_index
         self.end_index = end_index
@@ -11,3 +11,6 @@ class League:
 
     def set_single(self, single):
         self.single = single
+    
+    def print(self):
+        print("League ", self.id, ", Start: ", self.start_index, ", End: ", self.end_index)
