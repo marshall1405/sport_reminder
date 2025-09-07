@@ -1,10 +1,12 @@
 from fetcher import fetch_html_text
-from html_parser import parse_whole_page
+from html_parser import create_matches
 # for now we will use this tennis url
 url = "https://www.livesport.cz/tenis/"
 
 html = fetch_html_text(url)
-indices = parse_whole_page(html)
+matches = create_matches(html)
 
-print(indices)
+for m in matches:
+    m.print()
+
 
