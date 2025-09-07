@@ -15,6 +15,11 @@ def create_matches(text):
             else:
                 output.append(Match(m+1, indices[m], indices[m]+5000))
         return output
+    
+def parse_matches(matches, text):
+    for m in matches:
+        relevant_text = text[m.start_index: m.end_index]
+
 
 
 def find_match_indices(text):

@@ -1,3 +1,5 @@
+from league import League
+
 class Match:
     def __init__(self, id=0, start_index=0, end_index=0):
         self.id = id
