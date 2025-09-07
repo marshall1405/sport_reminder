@@ -34,9 +34,10 @@ def parse_matches(matches, text):
 
 def parse_leagues(leagues, text):
     for l in leagues:
-        return
+        relevant_text = text[l.start_index:l.end_index]
 
 
+# MATCH
 def parse_teams(match, relevant_text):
     return
 
@@ -46,6 +47,10 @@ def parse_league(match, relevant_text):
 def parse_time(match, relevant_text):
     return
 
+
+# LEAGUE
+def parse_name(league, relevant_text):
+    return
 
 
 def find_match_indices(text):
