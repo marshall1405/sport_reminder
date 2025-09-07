@@ -35,6 +35,8 @@ def parse_matches(matches, text):
 def parse_leagues(leagues, text):
     for l in leagues:
         relevant_text = text[l.start_index:l.end_index]
+        parse_name(l, relevant_text)
+        parse_single(l, relevant_text)
 
 
 # MATCH
@@ -50,8 +52,11 @@ def parse_time(match, relevant_text):
 
 # LEAGUE
 def parse_name(league, relevant_text):
-    return
+    league.set_name((re.search(r'<a title="([^"]+)"', relevant_text)).group(1))
 
+def parse_single(league, relevant_text):
+    single = re.search(r'>([^<]+)<', relevant_text)
+    league.set_single("DVOUHRY" in single.group(1))
 
 def find_match_indices(text):
     return [m.start() for m in re.finditer(r'<a href="https://www.livesport.cz/zapas', text)]

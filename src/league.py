@@ -13,4 +13,4 @@ class League:
         self.single = single
     
     def print(self):
-        print("League ", self.id, ", Start: ", self.start_index, ", End: ", self.end_index)
+        print("League ", self.id, ", Start: ", self.start_index, ", End: ", self.end_index, "Name: ", self.name, ", Single: ", self.single)
