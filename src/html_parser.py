@@ -57,6 +57,7 @@ def parse_league(match, leagues):
         if l < len(leagues)-1:
             if match_start > leagues[l].start_index and match_start < leagues[l+1].start_index:
                 match.set_league(leagues[l])
+                break
         else:
             match.set_league(leagues[l])
 

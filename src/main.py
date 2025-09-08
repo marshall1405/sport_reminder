@@ -9,6 +9,9 @@ matches, leagues = create_matches_leagues(html)
 parse_leagues(leagues, html)
 parse_matches(matches, leagues, html)
 
+for l in leagues:
+    print(l.print())
+
 for m in matches:
     m.print()
 
