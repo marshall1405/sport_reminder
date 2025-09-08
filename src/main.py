@@ -9,10 +9,12 @@ matches, leagues = create_matches_leagues(html)
 parse_leagues(leagues, html)
 parse_matches(matches, leagues, html)
 
+single_future_matches = [m for m in matches if m.time != "No Time" and m.league.single]
+
 for l in leagues:
     print(l.print())
 
-for m in matches:
+for m in single_future_matches:
     m.print()
 
 
