@@ -1,5 +1,8 @@
 from fetcher import fetch_html_text
 from html_parser import create_matches_leagues,parse_matches, parse_leagues
+from message_formatter import format_matches_html
+from sender import send_email
+
 # for now we will use this tennis url
 url = "https://www.livesport.cz/tenis/"
 
@@ -10,12 +13,13 @@ parse_leagues(leagues, html)
 parse_matches(matches, leagues, html)
 
 single_future_matches = [m for m in matches if m.time != "No Time" and m.league.single]
+future_matches = [m for m in matches if m.time != "No Time"]
 
-for l in leagues:
-    print(l.print())
+html = format_matches_html(future_matches)
 
-for m in single_future_matches:
-    m.print()
+send_email("Dnesni Tenisove Zapasy", html)
+
+
 
 
 

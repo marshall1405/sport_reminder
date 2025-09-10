@@ -14,17 +14,16 @@ EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587  # TLS port
+EMAIL_PORT = 587 
 
-def send_email(subject, body, to):
-    msg = MIMEText(body)
+def send_email(subject, message, to=EMAIL_RECEIVER):
+    msg = MIMEText(message, "html")
     msg["Subject"] = subject
     msg["From"] = EMAIL_ADDRESS
     msg["To"] = EMAIL_RECEIVER
 
-    # Connect to Gmail SMTP server
     with smtplib.SMTP(EMAIL_HOST, EMAIL_PORT) as server:
-        server.starttls()  # upgrade to secure connection
+        server.starttls()
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         server.send_message(msg)
 
