@@ -2,6 +2,7 @@ from fetcher import fetch_html_text
 from html_parser import create_matches_leagues,parse_matches, parse_leagues
 from message_formatter import format_matches_html
 from sender import send_email
+from filter import filter_players, filter_tournaments, filter_all
 
 
 player_filter = input("Enter the SURNAME of a PLAYER you like: ")
@@ -19,7 +20,9 @@ parse_matches(matches, leagues, html)
 single_future_matches = [m for m in matches if m.time != "No Time" and m.league.single]
 future_matches = [m for m in matches if m.time != "No Time"]
 
-html = format_matches_html(future_matches)
+filtered_matches = filter_tournaments(future_matches, tournament_filter)
+
+html = format_matches_html(filtered_matches)
 
 send_email("Dnesni Tenisove Zapasy", html)
 
