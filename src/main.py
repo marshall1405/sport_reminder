@@ -11,9 +11,6 @@ tournament_filter = input("Enter the name of a TOURNAMENT you like: ")
 players = create_player_array(player_filter)
 tournaments = create_tournament_array(tournament_filter)
 
-print(players)
-print(tournaments)
-
 # for now we will use this tennis url
 url = "https://www.livesport.cz/tenis/"
 
@@ -26,7 +23,7 @@ parse_matches(matches, leagues, html)
 single_future_matches = [m for m in matches if m.time != "No Time" and m.league.single]
 future_matches = [m for m in matches if m.time != "No Time"]
 
-filtered_matches = filter_players(future_matches, player_filter)
+filtered_matches = filter_all(future_matches, players, tournaments)
 
 html = format_matches_html(filtered_matches)
 
