@@ -20,10 +20,7 @@ matches, leagues = create_matches_leagues(html)
 parse_leagues(leagues, html)
 parse_matches(matches, leagues, html)
 
-single_future_matches = [m for m in matches if m.time != "No Time" and m.league.single]
-future_matches = [m for m in matches if m.time != "No Time"]
-
-filtered_matches = filter_all(future_matches, players, tournaments)
+filtered_matches = filter_all(matches, players, tournaments)
 
 html = format_matches_html(filtered_matches)
 

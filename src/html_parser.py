@@ -44,8 +44,8 @@ def parse_leagues(leagues, text):
 
 # MATCH
 def parse_teams(match, relevant_text):
-    team1 = re.search(r'event__participant--home">([^<]+)<', relevant_text)
-    team2 = re.search(r'event__participant--away">([^<]+)<', relevant_text)
+    team1 = re.search(r'event__participant--home[^"]*">([^<]+)<', relevant_text)
+    team2 = re.search(r'event__participant--away[^"]*">([^<]+)<', relevant_text)
     if not team1 or not team2:
         match.set_teams("NO TEAM", "NO TEAM")
     else:
@@ -62,11 +62,16 @@ def parse_league(match, leagues):
             match.set_league(leagues[l])
 
 def parse_time(match, relevant_text):
-    time = re.search(r'"event__time">([^<]+)<', relevant_text)
-    if time:
-        match.set_time(time.group(1))
-    else:
-        match.set_time("No Time")
+    time_patterns = [
+        r'"event__time">([^<]+)<',
+        r'"event__stage--block">([^<]+)<'
+    ]
+    for pattern in time_patterns:
+        found = re.search(pattern, relevant_text)
+        if found:
+            break
+    if found:
+        match.set_time(found.group(1))
 
 
 # LEAGUE
