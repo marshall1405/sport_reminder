@@ -44,10 +44,12 @@ def parse_leagues(leagues, text):
 
 # MATCH
 def parse_teams(match, relevant_text):
-    team1 = re.search(r'event__participant--home">([^<]+)<', relevant_text)
-    team2 = re.search(r'event__participant--away">([^<]+)<', relevant_text)
+    team1 = re.search(r'event__participant--home[^"]*">([^<]+)<', relevant_text)
+    team2 = re.search(r'event__participant--away[^"]*">([^<]+)<', relevant_text)
     if not team1 or not team2:
         match.set_teams("NO TEAM", "NO TEAM")
+        with open("fix.html", "w") as file:
+            file.write(relevant_text)
     else:
         match.set_teams(team1.group(1), team2.group(1))
 
