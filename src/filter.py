@@ -2,7 +2,9 @@ def filter_players(matches, players):
     output = []
     for m in matches:
         for p in players:
-            if p.lower() in m.team1.lower() or p.lower() in m.team2.lower():
+            team1_words = m.team1.lower().split()
+            team2_words = m.team2.lower().split()
+            if p.lower() in team1_words or p.lower() in team2_words:
                 output.append(m)
                 break
     return output
@@ -18,24 +20,16 @@ def filter_tournaments(matches, tournaments):
     return output
 
 def filter_all(matches, players, tournaments):
-    output = []
-    for m in matches:
-        found = False
-        for p in players:
-            if p.lower() in m.team1.lower() or p.lower() in m.team2.lower():
-                found = True
-                break
-        if not found:
-            for t in tournaments:
-                if t.lower() in m.league.name.lower():
-                    found = True
-                    break
-        if found:
-            output.append(m)
-    return output
+    play_matches = filter_players(matches, players)
+    tour_matches = filter_tournaments(matches, tournaments)
+    return list(set(play_matches) | set(tour_matches))
 
 def create_player_array(players):
+    if not players:
+        return None
     return players.split(",")
 
 def create_tournament_array(tournaments):
+    if not tournaments:
+        return None
     return tournaments.split(",")

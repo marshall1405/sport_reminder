@@ -20,10 +20,15 @@ matches, leagues = create_matches_leagues(html)
 parse_leagues(leagues, html)
 parse_matches(matches, leagues, html)
 
-filtered_matches = filter_all(matches, players, tournaments)
 
-html = format_matches_html(filtered_matches)
+if players and tournaments:
+    matches = filter_all(matches, players, tournaments)
+elif players and not tournaments:
+    matches = filter_players(matches, players)
+elif not players and tournaments:
+    matches = filter_tournaments(matches,tournaments)
 
+html = format_matches_html(matches)
 send_email("Dnesni Tenisove Zapasy", html)
 
 
