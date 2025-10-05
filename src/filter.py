@@ -2,7 +2,9 @@ def filter_players(matches, players):
     output = []
     for m in matches:
         for p in players:
-            if p.lower() in m.team1.lower() or p.lower() in m.team2.lower():
+            team1_words = m.team1.lower().split()
+            team2_words = m.team2.lower().split()
+            if p.lower() in team1_words or p.lower() in team2_words:
                 output.append(m)
                 break
     return output
