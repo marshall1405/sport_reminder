@@ -1,5 +1,5 @@
 .env
 .vscode
 __pycache__/
-/src/reminder_settings/settings.json
+/src/gui/reminder_settings/settings.json
 
