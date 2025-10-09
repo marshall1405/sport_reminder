@@ -26,13 +26,3 @@ def send_email(subject, message, to=EMAIL_RECEIVER):
         server.starttls()
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         server.send_message(msg)
-
-
-"""
-if __name__ == "__main__":
-    send_email(
-        subject="Tennis Match Alert 🎾",
-        body="Don't forget Nadal vs Federer at 8pm!",
-        to=EMAIL_RECEIVER
-    )
-"""

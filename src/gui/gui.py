@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import streamlit as st
 import json
 import os
@@ -8,17 +9,14 @@ data = []
 if os.path.exists(file_path):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
-            # if file is empty, json.load will fail
             content = f.read().strip()
             if content:
                 data = json.loads(content)
             else:
                 data = []
-        # ensure it’s a list
         if not isinstance(data, list):
             data = list(data.values())
     except json.JSONDecodeError:
-        # broken JSON, start fresh
         data = []
 else:
     data = []
