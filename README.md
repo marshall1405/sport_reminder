@@ -10,3 +10,4 @@ It is important to me that the program is as independant as it could. This means
 ## Needed Libraries
 - playwright
 - dotenv
+- streamlit
