@@ -3,7 +3,7 @@ import streamlit as st
 import json
 import os
 
-file_path = "./reminder_settings/settings.json"
+file_path = "settings.json"
 
 data = []
 if os.path.exists(file_path):
