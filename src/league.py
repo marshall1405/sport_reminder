@@ -1,17 +1,10 @@
 class League:
-    def __init__(self, id, start_index, end_index):
-        self.id = id
-        self.start_index = start_index
-        self.end_index = end_index
-        self.name = None
-        self.single = None
-
-    def set_name(self, name):
+    def __init__(self, name):
         self.name = name
+        self.matches = []
 
-    def set_single(self, single):
-        self.single = single
-    
-    def print(self):
-        return f"Name: {self.name}, Single: {self.single}"
+    def add_match(self, match):
+        self.matches.append(match)
 
+    def __repr__(self):
+        return f"League(name={self.name})"

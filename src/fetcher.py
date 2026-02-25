@@ -1,14 +1,21 @@
 from playwright.sync_api import sync_playwright
 
-def fetch_html_text(url):
-    with sync_playwright() as play:
-        browser = play.chromium.launch(headless=True)
+def fetch_feed():
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
-        page.goto(url, wait_until="networkidle")
+        feed_data = None
 
-        html = page.content()
+        def handle_response(response):
+            nonlocal feed_data
+            if "/x/feed/f_" in response.url:
+                feed_data = response.text()
+
+        page.on("response", handle_response)
+
+        page.goto("https://www.livesport.cz/tenis/", wait_until="networkidle")
 
         browser.close()
-    return html
 
+        return feed_data

@@ -5,8 +5,6 @@ from dotenv import load_dotenv
 import smtplib
 from email.mime.text import MIMEText
 
-from filter import filter_all
-
 from message_formatter import format_matches_html
 
 # Get path to the root directory (one level above src/)

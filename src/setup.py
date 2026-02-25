@@ -1,8 +1,10 @@
 import os
 import sys
-from sender import send_emails_from_settings
-from fetcher import fetch_html_text
-from html_parser import create_matches_leagues, parse_leagues, parse_matches
+from filter import filter_players, normalize_players, load_settings
+from parser import map_feed_to_objects, extract_all_matches
+from fetcher import fetch_feed
+from message_formatter import format_matches_html
+from sender import send_email
 
 def setup_menu():
     print("SPORT REMINDER SETUP")
@@ -21,16 +23,24 @@ def setup_menu():
         #TODO Cron
 
     elif choice == "3":
-        # for now we will use this tennis url
-        url = "https://www.livesport.cz/tenis/"
+        leagues = map_feed_to_objects(fetch_feed())
+        matches = extract_all_matches(leagues)
 
-        html = fetch_html_text(url)
-        matches, leagues = create_matches_leagues(html)
+        settings = load_settings()
 
-        #p_leagues = parse_leagues(leagues, html)
-        p_matches = parse_matches(matches, leagues, html)
+        for user in settings:
+            players = normalize_players(user.get("filter"))
+            email = user.get("email")
 
-        send_emails_from_settings("Dnesni Tenisove Zapasy", p_matches)    
+            user_matches = filter_players(matches, players)
+
+            if user_matches:
+                html = format_matches_html(user_matches)
+                send_email(
+                    subject="Dnešní Tenisové Zápasy",
+                    message=html,
+                    to=email
+                )
 
 
     elif choice == "4":
