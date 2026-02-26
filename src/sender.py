@@ -29,23 +29,4 @@ def send_email(subject, message, to):
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         server.send_message(msg)
 
-def send_emails_from_settings(subject, matches):
-    with open("settings.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-        for setting in data:
-            players = setting.get("filter")
-
-            output = filter_all(matches, players, "")
-            message = format_matches_html(output)
-
-            msg = MIMEText(message, "html")
-            msg["Subject"] = subject
-            msg["From"] = EMAIL_ADDRESS
-            msg["To"] = setting.get("email")
-
-            with smtplib.SMTP(EMAIL_HOST, EMAIL_PORT) as server:
-                server.starttls()
-                server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-                server.send_message(msg)
 

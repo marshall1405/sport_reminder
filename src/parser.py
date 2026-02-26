@@ -68,6 +68,7 @@ def map_feed_to_objects(raw_text):
         # Match
         if "AE" in data and "FH" in data:
             match = Match(
+                match_id=data.get("AA"),
                 player1=data.get("CX"),
                 player2=data.get("AF"),
                 time=convert_time(data.get("AD")),

@@ -5,6 +5,7 @@ from parser import map_feed_to_objects, extract_all_matches
 from fetcher import fetch_feed
 from message_formatter import format_matches_html
 from sender import send_email
+from telly import check_telly
 
 def setup_menu():
     print("SPORT REMINDER SETUP")
@@ -27,20 +28,30 @@ def setup_menu():
         matches = extract_all_matches(leagues)
 
         settings = load_settings()
+        telly_cache = {}
 
-        for user in settings:
-            players = normalize_players(user.get("filter"))
+        for index, user in enumerate(settings):
+
             email = user.get("email")
+            players = normalize_players(user.get("filter"))
 
             user_matches = filter_players(matches, players)
 
-            if user_matches:
-                html = format_matches_html(user_matches)
-                send_email(
-                    subject="Dnešní Tenisové Zápasy",
-                    message=html,
-                    to=email
-                )
+            for m in user_matches:
+                print(m.match_id)
+
+            if not user_matches:
+                continue
+
+            if index < 5:
+                for match in user_matches:
+                    if match.match_id not in telly_cache:
+                        telly_cache[match.match_id] = check_telly(match.match_id)
+
+                    match.on_telly = telly_cache[match.match_id]
+
+            html = format_matches_html(user_matches)
+            #send_email("Dnešní Tenisové Zápasy", html, email)
 
 
     elif choice == "4":
