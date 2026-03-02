@@ -1,5 +1,3 @@
-from fetcher import fetch_match_detail
-
 TELLY_CHANNELS = {
     "Premier Sport 1",
     "Premier Sport 2",
@@ -23,17 +21,7 @@ TELLY_CHANNELS = {
     "ČT sport",
 }
 
-def check_telly(match_id):
-    detail_feed = fetch_match_detail(match_id)
-
-    if not detail_feed:
-        print('feed not found')
-        return None
-
-    detail_lower = detail_feed.lower()
-
-    for channel in TELLY_CHANNELS:
-        if channel.lower() in detail_lower:
-            return channel
-
+def check_telly(channel):
+    if channel in TELLY_CHANNELS:
+        return channel
     return None

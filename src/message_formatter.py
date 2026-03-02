@@ -1,7 +1,7 @@
 from collections import defaultdict
+from telly import check_telly
 
 def format_matches_html(matches):
-    from collections import defaultdict
 
     grouped = defaultdict(list)
 
@@ -18,10 +18,8 @@ def format_matches_html(matches):
         html += f"<h3>{league_name}</h3><ul>"
 
         for match in league_matches:
-            if match.telly_channel:
-                telly_info = f"📺 {match.telly_channel}"
-            else:
-                telly_info = ""
+            telly_channel = check_telly(match.channel)
+            telly_info = f"📺 On telly: {telly_channel}" if telly_channel else "Not on telly"
 
             html += f"""
                 <li>

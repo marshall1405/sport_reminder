@@ -37,21 +37,11 @@ def setup_menu():
 
             user_matches = filter_players(matches, players)
 
-            for m in user_matches:
-                print(m.match_id)
-
             if not user_matches:
                 continue
 
-            if index < 5:
-                for match in user_matches:
-                    if match.match_id not in telly_cache:
-                        telly_cache[match.match_id] = check_telly(match.match_id)
-
-                    match.on_telly = telly_cache[match.match_id]
-
             html = format_matches_html(user_matches)
-            #send_email("Dnešní Tenisové Zápasy", html, email)
+            send_email("Dnešní Tenisové Zápasy", html, email)
 
 
     elif choice == "4":
