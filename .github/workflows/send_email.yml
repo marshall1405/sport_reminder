@@ -1,0 +1,31 @@
+name: Send Tennis Match Emails
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Every day at 6:00 AM UTC (8:00 AM Prague time)
+  workflow_dispatch:       # Allow manual trigger from GitHub UI
+
+jobs:
+  send-emails:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright browser
+        run: playwright install chromium --with-deps
+
+      - name: Send emails
+        env:
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: python send_emails.py
+        working-directory: src
