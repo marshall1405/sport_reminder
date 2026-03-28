@@ -1,10 +1,12 @@
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from match import Match
 from league import League
 import json
 
+CET = timezone(timedelta(hours=1))
+
 def convert_time(ts):
-    return datetime.fromtimestamp(int(ts)).strftime("%H:%M")
+    return datetime.fromtimestamp(int(ts), tz=CET).strftime("%H:%M")
 
 def parse_feed(raw_text):
     objects = raw_text.split("~")
