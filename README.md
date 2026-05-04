@@ -6,6 +6,10 @@ Never miss a match. Get a daily email with today's tennis matches featuring your
 
 I don't follow sports daily, but I care a lot about specific players and matches. Important games kept slipping by unnoticed — so I built this to fix that.
 
+## Flow
+
+![Sport Reminder Flow](diagram/flowdiagram.png)
+
 ## How it works
 
 1. A headless Chromium browser (Playwright) opens [livesport.cz](https://www.livesport.cz/tenis/) and intercepts the live data feed

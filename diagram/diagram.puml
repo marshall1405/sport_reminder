@@ -1,0 +1,49 @@
+@startuml Sport Reminder Flow
+
+skinparam backgroundColor #FAFAFA
+skinparam sequenceArrowThickness 2
+skinparam sequenceParticipantBorderColor #336699
+skinparam sequenceParticipantBackgroundColor #DDEEFF
+skinparam sequenceLifeLineBorderColor #336699
+skinparam sequenceBoxBackgroundColor #F0F4FF
+skinparam sequenceBoxBorderColor #336699
+skinparam fontName Arial
+skinparam noteBorderColor #CC8800
+skinparam noteBackgroundColor #FFF3CD
+
+title Sport Reminder — Daily Email Flow
+
+participant "GitHub Actions\n<size:10>cron 08:00 CET</size>" as GHA
+participant "fetcher.py" as F
+participant "parser.py" as P
+participant "filter.py" as FL
+participant "message_formatter.py" as MF
+participant "sender.py" as S
+participant "Gmail SMTP" as G
+
+GHA -> GHA : write settings.json\nfrom secret
+GHA -> F : run send_emails.py
+
+F -> F : launch headless Chromium
+F -> F : open livesport.cz/tenis/
+F --> GHA : raw feed text
+
+GHA -> P : parse feed
+P -> P : split objects (~)\nparse fields (¬ ÷)
+P -> P : convert timestamps to CET
+P --> GHA : League + Match objects
+
+loop for each user in settings.json
+  GHA -> FL : filter matches\nby player names
+  alt matches found
+    FL -> MF : matching matches
+    MF -> MF : group by league\ncheck TV channels
+    MF -> S : HTML email body
+    S -> G : authenticate\n+ send email
+    G --> S : ok
+  else no matches
+    FL -> FL : skip user
+  end
+end
+
+@enduml
